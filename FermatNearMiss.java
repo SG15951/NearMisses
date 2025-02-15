@@ -5,13 +5,13 @@ import java.util.Scanner;
  * File: FermatNearMiss.java
  * External Files: None
  * Output Files: None
- * Programmers:  [Name] & [Partner Name]
- * Emails: [Email] & [Partner's Email]
- * Course: [Course Number and Section]
+ * Programmers:  Matthew Kominkiewicz & Seth Gilmore
+ * Emails: matthewgkominkiewi@lewisu.edu & sethagilmore@lewisu.edu
+ * Course: SP25-CPSC-44000-LT1
  * Submission Date: [Date]
  * Description: This program searches for "near misses" complacent to Fermat's Last Theorem
  *              by checking integer values of x, y, z, and n within user-defined ranges.
- * Resources Used: 
+ * Resources Used: W3Schools was used to help with proper syntax
  */
 
 public class FermatNearMiss {
@@ -41,7 +41,7 @@ public class FermatNearMiss {
 
         // Iterate through x and y values in the given range
         for (int x = 10; x <= k; x++) {
-            for (int y = 10; y <= k; y++) {
+            for (int y = x; y <= k; y++) {
                 long leftSide = (long) Math.pow(x, n) + (long) Math.pow(y, n);
                 int z = (int) Math.pow(leftSide, 1.0 / n); // Approximate z
 
