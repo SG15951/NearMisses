@@ -8,7 +8,7 @@ import java.util.Scanner;
  * Programmers:  Matthew Kominkiewicz & Seth Gilmore
  * Emails: matthewgkominkiewi@lewisu.edu & sethagilmore@lewisu.edu
  * Course: SP25-CPSC-44000-LT1
- * Submission Date: [Date]
+ * Submission Date: 2/16/2025
  * Description: This program searches for "near misses" complacent to Fermat's Last Theorem
  *              by checking integer values of x, y, z, and n within user-defined ranges.
  * Resources Used: W3Schools was used to help with proper syntax
