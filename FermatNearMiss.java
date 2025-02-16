@@ -21,10 +21,10 @@ public class FermatNearMiss {
         // Prompt user for exponent n and validate input
         int n;
         do {
-            System.out.print("Enter an exponent n (where 2 < n < 12): ");
+            System.out.print("Enter an exponent n (where 2 <= n <= 12): ");
             n = scanner.nextInt();
             // Ensuring n falls in the allowed range
-        } while (n <= 2 || n >= 12);
+        } while (n < 2 || n > 12);
 
         // Prompt user for upper bound k and validate input
         int k;
@@ -37,12 +37,13 @@ public class FermatNearMiss {
         // Initialize tracking variables for the smallest relative miss found
         double smallestRelativeMiss = Double.MAX_VALUE;
         int bestX = 0, bestY = 0, bestZ = 0;
-        int bestMiss = 0;
+        long bestMiss = Long.MAX_VALUE;
 
-        // Iterate through x and y values in the given range
+        // Iterate through x and y values within range
         for (int x = 10; x <= k; x++) {
             for (int y = x; y <= k; y++) {
                 long leftSide = (long) Math.pow(x, n) + (long) Math.pow(y, n);
+
                 int z = (int) Math.pow(leftSide, 1.0 / n); // Approximate z
 
                 long zPower = (long) Math.pow(z, n);
@@ -50,20 +51,28 @@ public class FermatNearMiss {
 
                 long miss1 = Math.abs(leftSide - zPower);
                 long miss2 = Math.abs(zNextPower - leftSide);
-                long miss = Math.min(miss1, miss2);
+                long miss;
+                int candidateZ;
 
-                double relativeMiss = (double) miss / leftSide; // Compute relative error
+                if (miss1 < miss2) {
+                    miss = miss1;
+                    candidateZ = z;
+                } else {
+                    miss = miss2;
+                    candidateZ = z + 1;
+                }
 
-                // Update smallest miss found if the new one is smaller
+                double relativeMiss = (double) miss / leftSide;
+
+// Update only when a smaller relative miss is found
                 if (relativeMiss < smallestRelativeMiss) {
-                    smallestRelativeMiss = relativeMiss;
+                    smallestRelativeMiss = relativeMiss * 100;
                     bestX = x;
                     bestY = y;
-                    bestZ = (miss1 < miss2) ? z : (z + 1);
-                    bestMiss = (int) miss;
+                    bestZ = candidateZ;
+                    bestMiss = miss;
 
-                    // Display current best result to user
-                    System.out.printf("Near miss found: x=%d, y=%d, z=%d, miss=%d, relative miss=%.8f\n",
+                    System.out.printf("Near miss found: x=%d, y=%d, z=%d, miss=%d, relative miss=%.8f percent\n",
                             bestX, bestY, bestZ, bestMiss, smallestRelativeMiss);
                 }
             }
@@ -71,10 +80,9 @@ public class FermatNearMiss {
 
         // Display final smallest near miss found
         System.out.println("\nSmallest near miss found:");
-        System.out.printf("x=%d, y=%d, z=%d, miss=%d, relative miss=%.8f\n",
+        System.out.printf("x=%d, y=%d, z=%d, miss=%d, relative miss=%.8f percent\n",
                 bestX, bestY, bestZ, bestMiss, smallestRelativeMiss);
 
-        // Close scanner to prevent resource leaks
         scanner.close();
     }
 }
